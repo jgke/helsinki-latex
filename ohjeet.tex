@@ -1,0 +1,52 @@
+\section{Ohjeet}
+
+Tässä pohjassa on kaikki, mitä yleiseen tutkielman kirjoittamiseen voisi
+tarvita.
+
+Tarvitset toimivan LaTeX-jakelun. Tämän lisäksi jotta lähdekoodiupotukset
+toimivat, tarvitset \texttt{Pygments}-paketin, jonka voi asentaa esimerkiksi
+käyttöjärjestelmäsi paketinhallintajärjestelmällä. Ubuntussa komento
+\texttt{sudo apt install python-pygments} asentaa tarvittavan paketin. Jos et
+halua tai voi asentaa Pygments-kirjastoa, voit myös antaa gradu-paketille vivun
+\texttt{nominted}, jos pärjäät ilman \texttt{minted}-kirjastoa.
+
+Tiedoston voi kääntää ohjelman~\ref{fig:compilelatex} mukaisella
+komentorimpsulla. Voit myös käyttää tämän pohjan mukana tulevaa
+\texttt{Makefile}-tiedostoa, jonka voi ajaa kirjoittamalla komentoriviin
+\texttt{make}.
+
+\begin{listing}[ht!]
+    \inputminted{Shell}{compile.sh}
+    \caption{Ohje tämän tiedoston kääntämiseen.}
+    \label{fig:compilelatex}
+\end{listing}
+
+Korjaa tiedekuntasi ja laitoksesi \texttt{tktltiki.cls} -tiedoston riveille 258-272.
+
+Laita lähteet \texttt{references.bib} -tiedostoon, jolloin niitä voi
+käyttää \texttt{citep}-komennolla~\citep{latexpohja}.
+
+Luo uusi \texttt{.tex}-tiedosto jokaiselle luvulle jotta tiedostot pysyvät
+hallinnassa. Liitteitä voi myös käyttää, kuten liite~\ref{app:liite} näyttää.
+
+Tässä pohjassa on kaikkea, mitä tutkielmaan voi tarvita ja vähän vielä päälle.
+Jos haluat laittaa itsellesi todo-nootteja, \texttt{hl}-komentoa voi käyttää.
+\hl{todo: parempi esimerkki}
+
+Jalkanootteja saa \texttt{footnote}-komennolla\footnote{Jalkanootit tulevat
+sivun pohjaan.}.
+
+\newpage
+
+\texttt{booktabs}-paketilla saa kauniita taulukoita:
+
+\begin{table}[ht!]
+    \begin{tabular}{@{}llp{8.5cm}@{}} \toprule
+    Ladontaohjelma & Onko käyttökelpoinen? & Muistiinpanoja \\ \midrule
+    \LaTeX         & Erittäin hyvä         & Your paper makes no goddamn sense, but it's the most beautiful thing I have ever laid eyes on. \\
+    Word           & Ei ole                & Siirrä yhtä kuvaa 10 millimetriä vasemmalle. Dokumenttiin tulee kolme uutta sivua. Kaukaisuudessa kuuluu poliisiauton sireenit. \\ \bottomrule
+    \end{tabular}
+
+    \caption{LaTeX vastaan Word.}
+    \label{table:properties}
+\end{table}

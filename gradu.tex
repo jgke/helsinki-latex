@@ -1,0 +1,64 @@
+\documentclass[gradu]{tktltiki}
+
+\usepackage{gradu}
+%\usepackage[nominted]{gradu}
+
+\makeatletter
+\AtBeginDocument{%
+    \renewcommand{\bibname}{Lähteet}
+    \renewcommand{\BRetrievedFrom}{Saatavilla\ }
+    \renewcommand{\BEd}{painos\hbox{}}
+    \renewcommand{\BOthers}[1]{ja muut\hbox{}}%
+    \renewcommand{\BOthersPeriod}[1]{ja muut\hbox{}}%
+    \renewcommand*{\bibfont}{\interlinepenalty 10000\relax}
+}
+\makeatother
+
+\begin{document}
+
+\title{Helsingin Yliopiston epävirallinen LaTeX-pohja}
+\author{Jaakko Hannikainen}
+\date{\today}
+\level{Pro gradu -tutkielma}
+
+\hypersetup{pageanchor=false}
+\maketitle
+\hypersetup{pageanchor=false}
+
+\classification{\protect{\ \\
+\  \textbf{Software and its engineering
+$\rightarrow$ Software notations and tools
+$\rightarrow$ General programming languages
+$\rightarrow$ Language types
+$\rightarrow$ Imperative languages} \\
+\  Professional topics
+$\rightarrow$ Management of computing and information systems
+$\rightarrow$ Software management
+$\rightarrow$ Software selection and adaptation \\
+}}
+
+\keywords{LaTeX, ohjelmointikielet}
+
+\begin{abstract}
+    \input{abstract.tex}
+
+\end{abstract}
+
+\newpage
+\tocbeginshere
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+
+\mytableofcontents
+
+\input{johdanto.tex}
+\newpage
+\input{ohjeet.tex}
+\newpage
+
+\bibliography{references}
+
+\appendixbeginhere
+\inputappendix{liite.tex}
+\appendixendhere
+
+\end{document}

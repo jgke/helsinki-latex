@@ -1,0 +1,145 @@
+\ProvidesPackage{gradu}
+\makeatletter
+
+\newif\if@nominted\@nomintedfalse
+\DeclareOption{nominted}{\@nomintedtrue}
+
+\ProcessOptions\relax
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Fonts and symbols
+\usepackage{lmodern}
+\usepackage{inconsolata}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{textcomp}
+
+% Typesetting
+\usepackage[final]{microtype}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{multirow}
+%\usepackage{fontspec} \setmainfont{Comic Sans MS}
+
+% Hyperlinks, ToC
+\usepackage[hidelinks]{hyperref}
+\usepackage{appendix}
+
+% References
+\usepackage[natbibapa,sectionbib]{apacite}
+\usepackage[finnish]{babel}
+\usepackage{usebib}
+\bibinput{references}
+
+% Figures
+\usepackage{graphicx}
+\if@nominted\else
+\usepackage{minted}
+\fi
+\usepackage{tikz}
+\usepackage{tabularx}
+\usetikzlibrary{shapes,positioning,arrows.meta,calc,shadows.blur}
+
+% Utilities
+\usepackage{calc}
+\usepackage[nottoc]{tocbibind} % Add references to ToC
+\usepackage{adjustbox} % Provides \adjustbox
+\usepackage{chngcntr} % Provides \counterwithin
+\usepackage{footnote} % Provides \footnote
+\usepackage{hyphenat} % Provides \hyp{}
+\usepackage{placeins} % Provides \FloatBarrier
+\usepackage{relsize} % Provides \textscale
+\usepackage{soulutf8} % Provides \hl
+\usepackage{tocloft} % Provides \cftaddtitleline
+\usepackage{totcount} % Provides \newtotcounter et al.
+%\usepackage{showframe} % Show frame
+
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+
+\sethlcolor{yellow}
+
+\linespread{1.25}
+
+\bibliographystyle{apacite}
+
+\newcommand{\citationneeded}{\textbf{[citation\_needed]}}
+
+\newcommand{\totalpagecount}{\pageref{mylastpage}}
+\newtotcounter{totalappendixcount}
+\numberofpagesinformation{%
+    \@ifundefined{r@appendixbegin}{%
+        \totalpagecount\ sivua%
+    }{%
+        \totalpagecount\ sivua + \total{totalappendixcount}\ %
+        \ifnum\totvalue{totalappendixcount}=1 liitesivu \else liitesivua \fi%
+    }%
+}
+
+
+\newcounter{appendixCount}
+
+\newcommand{\appendixsection}[1]{
+    \newpage
+    \pagenumbering{arabic}
+    \phantomsection
+    \stepcounter{appendixCount}
+    \section*{Liite \arabic{appendixCount}. #1}
+    \cftaddtitleline{toc}{section}{\numberline{\arabic{appendixCount}}#1}{}
+}
+
+\newcommand{\appendixlabel}[1]{%
+    \protected@write \@auxout {}{\string \newlabel {#1}{{\arabic{appendixCount}}{\thepage}{\arabic{appendixCount}}{#1}{}} }%
+    \hypertarget{#1}{}
+}
+
+\newcommand{\inputappendix}[1]{%
+    \input{#1}
+    \addtocounter{totalappendixcount}{\thepage}
+}
+
+\newcommand{\appendixbeginhere}{
+    \label{mylastpage}
+    \newpage
+    \label{appendixbegin}
+    \cftaddtitleline{toc}{section}{Liitteet}{}
+    \pagenumbering{gobble}
+    \appendix
+    \renewcommand{\thesection}{{\arabic{section}}}
+}
+
+\newcommand{\tocbeginshere}{\label{tocbegin}}
+\newcommand{\appendixendhere}{\label{appendixend}}
+
+\setminted{frame=single}
+\usemintedstyle{emacs}
+
+\renewcommand\listingscaption{Ohjelma}
+\renewcommand{\_}{\relax\ifmmode_\else \textscale{0.7}{\textunderscore}\fi}
+
+\newcounter{shadowblurcount}
+\tikzset{
+  /tikz/render blur shadow/.code={
+   \stepcounter{shadowblurcount}%
+    \pgfbs@savebb
+    \pgfsyssoftpath@getcurrentpath{\pgfbs@input@path}%
+    \pgfbs@compute@shadow@bbox
+    \pgfbs@process@rounding{\pgfbs@input@path}{\pgfbs@fadepath}%
+    \pgfbs@apply@canvas@transform
+    \colorlet{pstb@shadow@color}{white!\pgfbs@opacity!black}%
+    \pgfdeclarefading{shadowfading\the\c@shadowblurcount}{\pgfbs@paint@fading}%
+    \pgfsetfillcolor{black}%
+    \pgfsetfading{shadowfading\the\c@shadowblurcount}%
+       {\pgftransformshift{\pgfpoint{\pgfbs@midx}{\pgfbs@midy}}}%
+    \pgfbs@usebbox{fill}%
+    \pgfbs@restorebb
+  },
+  }
+
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{listing}{section}
+
+\makeatother
